@@ -33,11 +33,11 @@ public class Calculator {
      * @returns the result of this operation.
      **/
     public Integer sum(Integer a, Integer b) {
-        if (a == null)
-            return b;
+        int x = (a == null) ? 0 : a;
+        int y = (b == null) ? 0 : b;
 
         ++numberOfOperations;
-        return a + b;
+        return x + y;
     }
 
     /**
