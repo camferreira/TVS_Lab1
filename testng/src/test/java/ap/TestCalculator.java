@@ -31,7 +31,7 @@ public class TestCalculator {
     }
 
     @Test
-    public void testSum_TwoNonNullIntegeres(){
+    public void testSum_TwoNonNullIntegers(){
         Calculator c = new Calculator("Calc");
         assertEquals(c.sum(2, 3), Integer.valueOf(5));
         assertEquals(c.getNumberOfOperations(), 1);
