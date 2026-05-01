@@ -51,12 +51,14 @@ public class Calculator {
      * @throws IllegalArgumentException if b is 0.
       **/
     public Integer divide(Integer a, Integer b) {
-        int x = (a==null) ? 0 : a;
         if (b==null || b == 0) throw new IllegalArgumentException();
         
         ++numberOfOperations;
         
-        return x / b;
+        if (a == null)
+            return 0; 
+
+        return a / b;
     }
 
     /**
