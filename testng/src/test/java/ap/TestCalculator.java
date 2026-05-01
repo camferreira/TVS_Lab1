@@ -6,11 +6,21 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import static org.testng.Assert.*;
 
+@Test 
 public class TestCalculator {
-    @Test
-    public void testConstructorValidName() {
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.getName(), "Calc");
+
+    @DataProvider
+    private Object[][] computeDataForValidCtor() {
+        return new Object[][] {
+            {"12"},
+            {"123"},
+            {"12345"}};
+    }
+    @Test(dataProvider = "computeDataForValidCtor")
+    public void testConstructorValidName(String name) {
+        Calculator c = new Calculator(name);
+        
+        assertEquals(c.getName(), name);
         assertEquals(c.getNumberOfOperations(), 0);
     }
     
