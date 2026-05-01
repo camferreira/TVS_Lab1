@@ -8,7 +8,7 @@ import static org.testng.Assert.*;
 
 @Test 
 public class TestCalculator {
-
+    
     @DataProvider
     private Object[][] computeDataForValidCtor() {
         return new Object[][] {
@@ -23,8 +23,17 @@ public class TestCalculator {
         assertEquals(c.getName(), name);
         assertEquals(c.getNumberOfOperations(), 0);
     }
+
+    @DataProvider
+    private Object[][] computeInvalideDataForCtor() {
+        return new Object[][] {
+            {"1"},
+            {""},
+            {null},
+            {"123456"}};
+    }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "computeInvalideDataForCtor")
     public void testConstructorNullName() {
         new Calculator(null);
     }
