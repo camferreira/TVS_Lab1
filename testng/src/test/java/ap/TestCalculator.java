@@ -8,6 +8,7 @@ import static org.testng.Assert.*;
 
 @Test 
 public class TestCalculator {
+    private Calculator c;
     
     @DataProvider
     private Object[][] computeDataForValidCtor() {
@@ -16,6 +17,7 @@ public class TestCalculator {
             {"123"},
             {"12345"}};
     }
+
     @Test(dataProvider = "computeDataForValidCtor")
     public void testConstructorValidName(String name) {
         Calculator c = new Calculator(name);
@@ -34,18 +36,8 @@ public class TestCalculator {
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class, dataProvider = "computeInvalideDataForCtor")
-    public void testConstructorNullName() {
-        new Calculator(null);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testConstructorTooShortName() {
-        new Calculator("C");
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testConstructorTooLongName() {
-        new Calculator("Calcul");
+    public void testConstructorNullName(String name) {
+        new Calculator(name);
     }
 
     @Test
