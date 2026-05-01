@@ -29,4 +29,32 @@ public class TestCalculator {
     public void testConstructorTooLongName() {
         new Calculator("Calcul");
     }
+
+    @Test
+    public void testSum_TwoNonNullIntegeres(){
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.sum(2, 3), Integer.valueOf(5));
+        assertEquals(c.getNumberOfOperations(), 1);
+    }
+
+    @Test
+    public void testSum_NullA(){
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.sum(null, 2), Integer.valueOf(2));
+        assertEquals(c.getNumberOfOperations(), 1);
+    }
+
+    @Test
+    public void testSum_NullB(){
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.sum(2, null), Integer.valueOf(2));
+        assertEquals(c.getNumberOfOperations(), 1);
+    }    
+
+    @Test
+    public void testSum_TwoNullNumbers(){
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.sum(null, null), Integer.valueOf(0));
+        assertEquals(c.getNumberOfOperations(), 1);
+    } 
 }
