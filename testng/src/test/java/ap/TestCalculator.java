@@ -40,33 +40,30 @@ public class TestCalculator {
         new Calculator(name);
     }
 
-    @Test
-    public void testSum_TwoNonNullIntegers(){
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.sum(2, 3), Integer.valueOf(5));
-        assertEquals(c.getNumberOfOperations(), 1);
+    @BeforeMethod private void setup() {
+        c = new Calculator("test");
     }
 
-    @Test
-    public void testSum_NullA(){
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.sum(null, 2), Integer.valueOf(2));
-        assertEquals(c.getNumberOfOperations(), 1);
+    @DataProvider
+    private Object[][] computeDataForSum() {
+        return new Object[][] {
+        {3, 4, 7},
+        {-3 , -44, -47},
+        {null, 4, 4},
+        {-3, null, -3},
+        {null, null, 0},
+        {0, 0, 0}};
     }
 
-    @Test
-    public void testSum_NullB(){
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.sum(2, null), Integer.valueOf(2));
-        assertEquals(c.getNumberOfOperations(), 1);
-    }    
+    @Test(dataProvider = "computeDataForSum")
+    public void testSum(Integer param1, Integer param2, Integer expectedResult) {
+        // Act
+        Integer result = c.sum(param1, param2);
 
-    @Test
-    public void testSum_TwoNullNumbers(){
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.sum(null, null), Integer.valueOf(0));
+        // Assert
+        assertEquals(result, expectedResult);
         assertEquals(c.getNumberOfOperations(), 1);
-    } 
+    }
 
     @Test
     public void testDivide_TwoValidIntegers() {
