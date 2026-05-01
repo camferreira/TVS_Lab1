@@ -57,4 +57,48 @@ public class TestCalculator {
         assertEquals(c.sum(null, null), Integer.valueOf(0));
         assertEquals(c.getNumberOfOperations(), 1);
     } 
+
+    @Test
+    public void testDivide_TwoValidIntegers() {
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.divide(4, 2), Integer.valueOf(2));
+        assertEquals(c.getNumberOfOperations(), 1);
+    }
+
+    @Test
+    public void testDivide_NullDividend() {
+        Calculator c = new Calculator("Calc");
+        assertEquals(c.divide(null, 2), Integer.valueOf(0));
+        assertEquals(c.getNumberOfOperations(), 1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDivide_ByZero() {
+        Calculator c = new Calculator("Calc");
+        try {
+            c.divide(2, 0);
+        } finally {
+            assertEquals(c.getNumberOfOperations(), 0);
+        }
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDivide_NullDivisor() {
+        Calculator c = new Calculator("Calc");
+        try {
+            c.divide(2, null);
+        } finally {
+            assertEquals(c.getNumberOfOperations(), 0);
+        }
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDivide_TwoNullIntegers() {
+        Calculator c = new Calculator("Calc");
+        try {
+            c.divide(null, null);
+        } finally {
+            assertEquals(c.getNumberOfOperations(), 0);
+        }
+    }
 }
