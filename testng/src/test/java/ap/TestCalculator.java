@@ -65,47 +65,55 @@ public class TestCalculator {
         assertEquals(c.getNumberOfOperations(), 1);
     }
 
-    @Test
-    public void testDivide_TwoValidIntegers() {
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.divide(4, 2), Integer.valueOf(2));
-        assertEquals(c.getNumberOfOperations(), 1);
+    @DataProvider
+    private Object[][] computeInvalidDataForDivide() {
+        return new Object[][] {
+        {1, null},
+        {-2, 0},
+        {null, null},
+        {0, 0},
+        {0, null}};
     }
-
-    @Test
-    public void testDivide_NullDividend() {
-        Calculator c = new Calculator("Calc");
-        assertEquals(c.divide(null, 2), Integer.valueOf(0));
-        assertEquals(c.getNumberOfOperations(), 1);
+  
+    @Test(dataProvider = "computeInvalidDataForDivide")
+    public void testDivideWithInvalidData(Integer dividendo, Integer divider) {
+      //Act & Assert
+      assertThrows(IllegalArgumentException.class, () -> {c.divide(dividendo, divider);});
+      assertEquals(c.getNumberOfOperations(), 0);
     }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDivide_ByZero() {
-        Calculator c = new Calculator("Calc");
-        try {
-            c.divide(2, 0);
-        } finally {
-            assertEquals(c.getNumberOfOperations(), 0);
-        }
+  
+    /**
+     * Another way of handling expected exceptions. This one iis the old solution, it still is valid
+     * but you have to write more code (compared with the version using assertThrows)
+     **/
+    @Test(dataProvider = "computeInvalidDataForDivide")
+    public void testDivideWithInvalidDataV2(Integer dividendo, Integer divider) {
+      //Act & Assert
+      try {
+        c.divide(dividendo, divider);
+        fail("Should have thrown IllegalAgumentExcetion in divide");
+      } catch(IllegalArgumentException iae) {
+        assertEquals(c.getNumberOfOperations(), 0);
+      }
     }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDivide_NullDivisor() {
-        Calculator c = new Calculator("Calc");
-        try {
-            c.divide(2, null);
-        } finally {
-            assertEquals(c.getNumberOfOperations(), 0);
-        }
+  
+    @DataProvider
+    private Object[][] computeValidDataForDivide() {
+      return new Object[][] {
+        {0, 4, 0},
+        {null, 50, 0},
+        {10, 5, 2},
+        {-100, -5, 20},
+        {-7, 4, -1}};
     }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDivide_TwoNullIntegers() {
-        Calculator c = new Calculator("Calc");
-        try {
-            c.divide(null, null);
-        } finally {
-            assertEquals(c.getNumberOfOperations(), 0);
-        }
+  
+    @Test(dataProvider = "computeValidDataForDivide")
+    public void testDivideWithValidData(Integer dividendo, Integer divider, Integer expectedResult) {
+      //Act
+      Integer result = c.divide(dividendo, divider);
+  
+      //Assert
+      assertEquals(result, expectedResult);
+      assertEquals(c.getNumberOfOperations(), 1);
     }
 }
